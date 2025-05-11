@@ -2,18 +2,16 @@
 pragma solidity ^0.8.13;
 
 import {Script, console} from "forge-std/Script.sol";
-import {Counter} from "../src/Counter.sol";
+import {AiderToken} from "../src/AiderToken.sol";
 
-contract CounterScript is Script {
-    Counter public counter;
+contract DeployAiderToken is Script {
+    AiderToken public aiderToken;
 
-    function setUp() public {}
-
-    function run() public {
+    function run() public returns (AiderToken) {
         vm.startBroadcast();
-
-        counter = new Counter();
-
+        // The deployer (msg.sender via vm.startBroadcast) will be the initial owner
+        aiderToken = new AiderToken(msg.sender);
         vm.stopBroadcast();
+        return aiderToken;
     }
 }
